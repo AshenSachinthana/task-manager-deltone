@@ -78,6 +78,9 @@ describe("useTasks hook", () => {
   });
 
   it("should edit a task", () => {
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date("2025-01-01T00:00:00.000Z"));
+
     const { result } = renderHook(() => useTasks());
 
     act(() => {
@@ -86,13 +89,19 @@ describe("useTasks hook", () => {
 
     const taskId = result.current.tasks[0].id;
 
+    // Move time forward before editing
+    jest.setSystemTime(new Date("2025-01-01T00:05:00.000Z"));
+
     act(() => {
       result.current.editTask(taskId, "Updated", "Updated Desc");
     });
 
     expect(result.current.tasks[0].title).toBe("Updated");
     expect(result.current.tasks[0].description).toBe("Updated Desc");
-    expect(result.current.tasks[0].updatedAt).not.toBe(result.current.tasks[0].createdAt);
+    expect(result.current.tasks[0].createdAt).toBe("2025-01-01T00:00:00.000Z");
+    expect(result.current.tasks[0].updatedAt).toBe("2025-01-01T00:05:00.000Z");
+
+    jest.useRealTimers();
   });
 
   it("should delete a task", () => {
