@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rm -f /c/Users/dasac/Desktop/A/Assignment/deltonesolutions/task-manager-deltone/app/page.js /c/Users/dasac/Desktop/A/Assignment/deltonesolutions/task-manager-deltone/app/layout.js /c/Users/dasac/Desktop/A/Assignment/deltonesolutions/task-manager-deltone/app/loading.js /c/Users/dasac/Desktop/A/Assignment/deltonesolutions/task-manager-deltone/app/not-found.js /c/Users/dasac/Desktop/A/Assignment/deltonesolutions/task-manager-deltone/next.config.mjs && rm -f /c/Users/dasac/Desktop/A/Assignment/deltonesolutions/task-manager-deltone/components/*.jsx && rm -f /c/Users/dasac/Desktop/A/Assignment/deltonesolutions/task-manager-deltone/hooks/*.js)"
+    ]
+  }
+}
