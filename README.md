@@ -17,6 +17,8 @@ A simple and elegant task manager web application built with Next.js.
 - **React 19**
 - **Plain CSS** (no Tailwind, no CSS frameworks)
 - **localStorage** for data persistence
+- **Jest** + **React Testing Library** for unit testing
+- **GitHub Actions** for CI/CD
 - **Vercel** for deployment
 
 ## Features
@@ -55,6 +57,29 @@ A simple and elegant task manager web application built with Next.js.
 4. **Open your browser:**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
+## Running Tests Locally
+
+Run all unit tests with:
+
+```bash
+npm test
+```
+
+## CI/CD Pipeline
+
+This project uses **GitHub Actions** for continuous integration and deployment.
+
+Every push to `main` automatically triggers the pipeline:
+
+```
+Push to main → Install Dependencies → Run All Tests → Tests Pass? → Deploy to Vercel
+                                                     → Tests Fail? → Deployment blocked
+```
+
+- Tests must pass before any deployment happens
+- Pull requests to `main` also run tests (but do not deploy)
+- The workflow is defined in `.github/workflows/ci-cd.yml`
+
 ## Architecture
 
 Next.js App Router is used to demonstrate server/client component separation. All task state is managed client-side via localStorage, keeping the app fully static with no backend required.
@@ -63,26 +88,33 @@ Next.js App Router is used to demonstrate server/client component separation. Al
 
 ```
 app/
-  layout.js          — Root layout with Inter font and metadata
-  page.js            — Home page (Server Component wrapper)
-  loading.js         — Full-page loading skeleton
-  not-found.js       — Custom 404 page
+  layout.tsx         — Root layout with Inter font and metadata
+  page.tsx           — Home page (Server Component wrapper)
+  loading.tsx        — Full-page loading skeleton
+  not-found.tsx      — Custom 404 page
   globals.css        — Global styles, CSS variables, resets
 
 components/
-  TaskBoard.jsx      — Main client container, holds all state
-  TaskForm.jsx       — Add new task modal/form
-  TaskEditModal.jsx  — Edit existing task modal
-  TaskItem.jsx       — Single task card
-  TaskList.jsx       — Renders filtered/paginated task cards
-  SearchBar.jsx      — Search input component
-  FilterTabs.jsx     — All / Active / Completed tabs
-  Pagination.jsx     — Pagination controls
-  EmptyState.jsx     — Empty state messages
-  Navbar.jsx         — App header
+  TaskBoard.tsx      — Main client container, holds all state
+  TaskForm.tsx       — Add new task modal/form
+  TaskEditModal.tsx  — Edit existing task modal
+  TaskItem.tsx       — Single task card
+  TaskList.tsx       — Renders filtered/paginated task cards
+  SearchBar.tsx      — Search input component
+  FilterTabs.tsx     — All / Active / Completed tabs
+  Pagination.tsx     — Pagination controls
+  EmptyState.tsx     — Empty state messages
+  Navbar.tsx         — App header
 
 hooks/
-  useTasks.js        — Task CRUD logic + localStorage sync
-  usePagination.js   — Pagination logic
-  useSearch.js       — Debounced search logic
+  useTasks.ts        — Task CRUD logic + localStorage sync
+  usePagination.ts   — Pagination logic
+  useSearch.ts       — Debounced search logic
+
+__tests__/
+  hooks/             — Unit tests for custom hooks
+  components/        — Unit tests for React components
+
+.github/workflows/
+  ci-cd.yml      — GitHub Actions CI/CD pipeline
 ```
